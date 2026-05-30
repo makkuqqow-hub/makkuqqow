@@ -1,0 +1,5 @@
+*岩石A :
+
+rockA_fish1.glb        https://files.catbox.moe/ter0fn.glb
+
+*
