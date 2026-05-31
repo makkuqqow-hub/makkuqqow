@@ -12,7 +12,7 @@
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
       
       <a-assets>
-        <img id="rock-texture" src="texture/skyblue.png">
+        <img id="#rock-texture" src="texture/skyblue.png">
       </a-assets>
       
       <a-entity id="reef-group" position="0 0 -5">
@@ -28,7 +28,7 @@
       <a-marker preset="hiro">
         
         <a-sphere 
-          src="#my-poke-texture" 
+          src="#rock-texture" 
           radius="0.6" 
           position="0 0.6 0"
           animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear">
