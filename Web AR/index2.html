@@ -15,6 +15,16 @@
         <img id="rock-texture" src="texture/skyblue.png">
       </a-assets>
       
+      <a-entity id="reef-group" position="0 0 -5">
+  
+  <a-dodecahedron src="#rock-texture" radius="2" scale="2 0.6 3" position="0 0 0" material="roughness: 1;"></a-dodecahedron>
+  
+  <a-icosahedron src="#rock-texture" radius="1.2" scale="1 2.5 1" position="-1.5 1 0.5" rotation="15 30 0" material="roughness: 1;"></a-icosahedron>
+  
+  <a-dodecahedron src="#rock-texture" radius="0.8" position="1.2 0.2 -0.5" rotation="0 45 20" material="roughness: 1;"></a-dodecahedron>
+
+</a-entity>
+      
       <a-marker preset="hiro">
         
         <a-sphere 
