@@ -7,7 +7,7 @@
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script>
-      // 這裡保留你寫的 'underwater-shader' (略，保持不變)
+      // 這裡保留你寫的 'underwater-shader'
       AFRAME.registerShader('underwater-shader', {
         schema: {
           srcSand: {type: 'map', is: 'uniform'},
@@ -52,7 +52,7 @@
       </a-assets>
 
       <a-marker preset="hiro">
-      <a-entity light="type: ambient; color: #BBB; intensity: 1.5"></a-entity>
+        <a-entity light="type: ambient; color: #BBB; intensity: 1.5"></a-entity>
         
         <a-plane id="sand-plane"
                  width="3" height="3"
@@ -68,7 +68,8 @@
                  material="src: #caustics-texture; transparent: true; opacity: 0.6; blending: multiply">
         </a-plane>
         
-        <a-gltf-model src="#reef-model"
+        <a-gltf-model id="reef"
+                      src="#reef-model"
                       position="0.8 0 -0.8" 
                       scale="0.8 0.3 0.8"
                       rotation="0 0 0">
@@ -81,93 +82,91 @@
                       animation-mixer>
         </a-gltf-model>
         
-      
         <a-gltf-model id="patrol-fish"
                       src="#fishA-model2"
-                      position="0.6 0.4 0" 
+                      position="1.2 0.4 1.2" 
                       scale="0.08 0.08 0.08"
                       rotation="0 0 0"
                       animation-mixer>
         </a-gltf-model>
         
         <script>
-  // 2. 用 JS 監聽模型載入完成
-  document.querySelector('#reef').addEventListener('model-loaded', function (evt) {
-    // 取得圖片紋理
-    var texture = new THREE.TextureLoader().load('texture/rock.jpg'); // 這裡換成你想貼的圖片路徑
-    
-    // 遍歷模型的所有網格並換上新貼圖
-    evt.detail.model.traverse(function (node) {
-      if (node.isMesh) {
-        node.material.map = texture;
-        node.material.needsUpdate = true;
-      }
-    });
-  });
-</script>
-
-      
+          document.querySelector('#reef').addEventListener('model-loaded', function (evt) {
+            var texture = new THREE.TextureLoader().load('texture/rock.jpg'); 
+            evt.detail.model.traverse(function (node) {
+              if (node.isMesh) {
+                node.material.map = texture;
+                node.material.needsUpdate = true;
+              }
+            });
+          });
+        </script>
 
       </a-marker>
+      
       <a-entity camera></a-entity>
 
       <script>
-  // 等待 A-Scene 載入完成
-  document.querySelector('a-scene').addEventListener('loaded', function () {
-    const fish = document.querySelector('#patrol-fish');
-    if (!fish) return;
+        // 用一個定時器不斷檢查場景是否準備好，避開 loaded 事件被錯過的問題
+        var checkExist = setInterval(function() {
+          const fish = document.querySelector('#patrol-fish');
+          
+          if (fish) {
+            clearInterval(checkExist); // 抓到魚了，停止檢查，開始執行巡邏
+            startPatrol(fish);
+          }
+        }, 100);
 
-    // 1. 定義 3x3 沙灘四周的四個角落路徑點 (X, Y, Z)
-    // 邊長 3 的話，角落約在 1.2 與 -1.2 之間游動最完美
-    const waypoints = [
-      { x: 1.2,  y: 0.4, z: 1.2 },   // 角落 A (右上)
-      { x: 1.2,  y: 0.4, z: -1.2 },  // 角落 B (右下)
-      { x: -1.2, y: 0.4, z: -1.2 },  // 角落 C (左下)
-      { x: -1.2, y: 0.4, z: 1.2 }    // 角落 D (左上)
-    ];
-    
-    let currentTargetIndex = 1; // 從第二個點開始游
-    const speed = 0.002; // 調整游動速度，數字越大游越快
+        function startPatrol(fish) {
+          // 定義 3x3 沙灘四周的四個角落路徑點 (X, Y, Z)
+          const waypoints = [
+            { x: 1.2,  y: 0.4, z: 1.2 },   // 角落 A (右上)
+            { x: 1.2,  y: 0.4, z: -1.2 },  // 角落 B (右下)
+            { x: -1.2, y: 0.4, z: -1.2 },  // 角落 C (左下)
+            { x: -1.2, y: 0.4, z: 1.2 }    // 角落 D (左上)
+          ];
+          
+          let currentTargetIndex = 1; // 從第二個點（右下）開始游
+          const speed = 0.01; // 游動速度，0.01 是很剛好的速度
 
-    // 2. 每幀更新魚的位置與方向
-    function tick() {
-      // 取得魚當前的位置
-      let currentPos = fish.getAttribute('position');
-      // 取得當前目標點
-      let target = waypoints[currentTargetIndex];
+          function tick() {
+            let currentPos = fish.getAttribute('position');
+            let target = waypoints[currentTargetIndex];
 
-      // 計算魚到目標點的向量差
-      let dx = target.x - currentPos.x;
-      let dz = target.z - currentPos.z;
-      let distance = Math.sqrt(dx * dx + dz * dz);
+            // 計算與目標點的距離
+            let dx = target.x - currentPos.x;
+            let dz = target.z - currentPos.z;
+            let distance = Math.sqrt(dx * dx + dz * dz);
 
-      // 如果快游到目標點了（距離小於 0.05），就換下一個點
-      if (distance < 0.05) {
-        currentTargetIndex = (currentTargetIndex + 1) % waypoints.length;
-        return requestAnimationFrame(tick);
-      }
+            // 如果快游到角落了，就換下一個目標點
+            if (distance < 0.1) {
+              currentTargetIndex = (currentTargetIndex + 1) % waypoints.length;
+              requestAnimationFrame(tick);
+              return;
+            }
 
-      // 朝目標點移動
-      let moveX = currentPos.x + (dx / distance) * speed;
-      let moveZ = currentPos.z + (dz / distance) * speed;
-      this.el.setAttribute('position', { x: moveX, y: currentPos.y, z: moveZ });
+            // 朝目標點推進
+            let moveX = currentPos.x + (dx / distance) * speed;
+            let moveZ = currentPos.z + (dz / distance) * speed;
+            
+            // 【修復】這裡不能用 this.el，要直接操作抓到的 fish 變數
+            fish.setAttribute('position', { x: moveX, y: currentPos.y, z: moveZ });
 
-      // 這裡修正了魚頭的朝向
-    let angle = Math.atan2(dx, dz);
-    let angleDeg = THREE.MathUtils.radToDeg(angle);
-    
-    // 加上 90 度修正模型的初始角度偏差
-    this.el.setAttribute('rotation', { x: 0, y: angleDeg + 90, z: 0 });
-  }
-});
+            // 自動計算魚頭朝向
+            let angle = Math.atan2(dx, dz);
+            let angleDeg = THREE.MathUtils.radToDeg(angle);
+            
+            // 【修復】這裡加上 90 度修正模型的初始偏向
+            fish.setAttribute('rotation', { x: 0, y: angleDeg + 90, z: 0 });
 
-      requestAnimationFrame(tick);
-    }
+            requestAnimationFrame(tick);
+          }
 
-    // 啟動巡邏
-    requestAnimationFrame(tick);
-  });
-</script>
+          // 正式啟動無限循環
+          requestAnimationFrame(tick);
+        }
+      </script>
+
     </a-scene>
   </body>
 </html>
