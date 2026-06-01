@@ -46,6 +46,7 @@
       <a-assets>
         <img id="sand-texture" src="texture/beachsand.jpg" crossorigin="anonymous">
         <img id="caustics-texture" src="texture/underwater ripples.jpg" crossorigin="anonymous">
+        <a-asset-item id="reef-model" src="glb/rockA.glb"></a-asset-item>
       </a-assets>
 
       <a-marker preset="hiro">
@@ -63,7 +64,13 @@
                  rotation="-90 0 0"
                  material="src: #caustics-texture; transparent: true; opacity: 0.6; blending: multiply">
         </a-plane>
-
+        
+        <a-glb-model src="#reef-model"
+                      position="0.8 0 -0.8" 
+                      scale="0.8 0.3 -0.8"
+                      rotation="0 0 0">
+        </a-glb-model>
+        
         <a-entity id="placeholder-rock"
                   geometry="primitive: octahedron; radius: 0.4; detail: 1"
                   position="0.8 0.3 -0.8"
