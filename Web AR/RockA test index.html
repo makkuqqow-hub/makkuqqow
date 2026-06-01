@@ -50,7 +50,63 @@
         <a-asset-item id="fishA-model1" src="glb/A_mackerel.glb"></a-asset-item>
         <a-asset-item id="fishA-model2" src="glb/mm_project.glb"></a-asset-item>
       </a-assets>
+<script>
+  // 等待 A-Scene 載入完成
+  document.querySelector('a-scene').addEventListener('loaded', function () {
+    const fish = document.querySelector('#patrol-fish');
+    if (!fish) return;
 
+    // 1. 定義 3x3 沙灘四周的四個角落路徑點 (X, Y, Z)
+    // 邊長 3 的話，角落約在 1.2 與 -1.2 之間游動最完美
+    const waypoints = [
+      { x: 1.2,  y: 0.4, z: 1.2 },   // 角落 A (右上)
+      { x: 1.2,  y: 0.4, z: -1.2 },  // 角落 B (右下)
+      { x: -1.2, y: 0.4, z: -1.2 },  // 角落 C (左下)
+      { x: -1.2, y: 0.4, z: 1.2 }    // 角落 D (左上)
+    ];
+    
+    let currentTargetIndex = 1; // 從第二個點開始游
+    const speed = 0.005; // 調整游動速度，數字越大游越快
+
+    // 2. 每幀更新魚的位置與方向
+    function tick() {
+      // 取得魚當前的位置
+      let currentPos = fish.getAttribute('position');
+      // 取得當前目標點
+      let target = waypoints[currentTargetIndex];
+
+      // 計算魚到目標點的向量差
+      let dx = target.x - currentPos.x;
+      let dz = target.z - currentPos.z;
+      let distance = Math.sqrt(dx * dx + dz * dz);
+
+      // 如果快游到目標點了（距離小於 0.05），就換下一個點
+      if (distance < 0.05) {
+        currentTargetIndex = (currentTargetIndex + 1) % waypoints.length;
+        return requestAnimationFrame(tick);
+      }
+
+      // 朝目標點移動
+      let moveX = currentPos.x + (dx / distance) * speed;
+      let moveZ = currentPos.z + (dz / distance) * speed;
+      fish.setAttribute('position', { x: moveX, y: currentPos.y, z: moveZ });
+
+      // 自動計算魚頭朝向（讓魚永遠面向前進的方向）
+      // THREE.MathUtils.radToDeg 可以把弧度轉角度
+      let angle = Math.atan2(dx, dz);
+      let angleDeg = THREE.MathUtils.radToDeg(angle);
+      
+      // 根據你的模型初始轉向，可能需要加減角度（預設面朝前就直接用 angleDeg）
+      // 如果魚游的時候是橫著游，可以在這裡調整，例如 `angleDeg + 90`
+      fish.setAttribute('rotation', { x: 0, y: angleDeg, z: 0 });
+
+      requestAnimationFrame(tick);
+    }
+
+    // 啟動巡邏
+    requestAnimationFrame(tick);
+  });
+</script>
       <a-marker preset="hiro">
       <a-entity light="type: ambient; color: #BBB; intensity: 1.5"></a-entity>
         
