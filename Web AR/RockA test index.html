@@ -50,7 +50,68 @@
         <a-asset-item id="fishA-model1" src="glb/A_mackerel.glb"></a-asset-item>
         <a-asset-item id="fishA-model2" src="glb/mm_project.glb"></a-asset-item>
       </a-assets>
-<script>
+
+      <a-marker preset="hiro">
+      <a-entity light="type: ambient; color: #BBB; intensity: 1.5"></a-entity>
+        
+        <a-plane id="sand-plane"
+                 width="3" height="3"
+                 position="0 0 0"
+                 rotation="-90 0 0"
+                 material="src: #sand-texture; repeat: 2 2; color: #f0e6d6"> 
+        </a-plane>
+
+        <a-plane id="caustics-overlay"
+                 width="3" height="3"
+                 position="0 0.01 0" 
+                 rotation="-90 0 0"
+                 material="src: #caustics-texture; transparent: true; opacity: 0.6; blending: multiply">
+        </a-plane>
+        
+        <a-gltf-model src="#reef-model"
+                      position="0.8 0 -0.8" 
+                      scale="0.8 0.3 0.8"
+                      rotation="0 0 0">
+        </a-gltf-model>
+
+        <a-gltf-model src="#fishA-model1"
+                      position="0.4 0.4 0" 
+                      scale="0.08 0.08 0.08"
+                      rotation="0 0 0"
+                      animation-mixer>
+        </a-gltf-model>
+        
+      
+        <a-gltf-model id="patrol-fish"
+                      src="#fishA-model2"
+                      position="0.6 0.4 0" 
+                      scale="0.08 0.08 0.08"
+                      rotation="0 0 0"
+                      animation-mixer>
+        </a-gltf-model>
+        
+        <script>
+  // 2. 用 JS 監聽模型載入完成
+  document.querySelector('#reef').addEventListener('model-loaded', function (evt) {
+    // 取得圖片紋理
+    var texture = new THREE.TextureLoader().load('texture/rock.jpg'); // 這裡換成你想貼的圖片路徑
+    
+    // 遍歷模型的所有網格並換上新貼圖
+    evt.detail.model.traverse(function (node) {
+      if (node.isMesh) {
+        node.material.map = texture;
+        node.material.needsUpdate = true;
+      }
+    });
+  });
+</script>
+
+      
+
+      </a-marker>
+      <a-entity camera></a-entity>
+
+      <script>
   // 等待 A-Scene 載入完成
   document.querySelector('a-scene').addEventListener('loaded', function () {
     const fish = document.querySelector('#patrol-fish');
@@ -107,64 +168,6 @@
     requestAnimationFrame(tick);
   });
 </script>
-      <a-marker preset="hiro">
-      <a-entity light="type: ambient; color: #BBB; intensity: 1.5"></a-entity>
-        
-        <a-plane id="sand-plane"
-                 width="3" height="3"
-                 position="0 0 0"
-                 rotation="-90 0 0"
-                 material="src: #sand-texture; repeat: 2 2; color: #f0e6d6"> 
-        </a-plane>
-
-        <a-plane id="caustics-overlay"
-                 width="3" height="3"
-                 position="0 0.01 0" 
-                 rotation="-90 0 0"
-                 material="src: #caustics-texture; transparent: true; opacity: 0.6; blending: multiply">
-        </a-plane>
-        
-        <a-gltf-model src="#reef-model"
-                      position="0.8 0 -0.8" 
-                      scale="0.8 0.3 0.8"
-                      rotation="0 0 0">
-        </a-gltf-model>
-        
-        
-                      scale="0.08 0.08 0.08"
-                      rotation="0 0 0"
-                      animation-mixer>
-        </a-gltf-model>
-        
-      
-        <a-gltf-model src="#fishA-model2"
-                      position="0.6 0.4 0" 
-                      scale="0.08 0.08 0.08"
-                      rotation="0 0 0"
-                      animation-mixer>
-        </a-gltf-model>
-        
-        <script>
-  // 2. 用 JS 監聽模型載入完成
-  document.querySelector('#reef').addEventListener('model-loaded', function (evt) {
-    // 取得圖片紋理
-    var texture = new THREE.TextureLoader().load('texture/rock.jpg'); // 這裡換成你想貼的圖片路徑
-    
-    // 遍歷模型的所有網格並換上新貼圖
-    evt.detail.model.traverse(function (node) {
-      if (node.isMesh) {
-        node.material.map = texture;
-        node.material.needsUpdate = true;
-      }
-    });
-  });
-</script>
-
-      
-
-      </a-marker>
-      <a-entity camera></a-entity>
-
     </a-scene>
   </body>
 </html>
