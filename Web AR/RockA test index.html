@@ -5,7 +5,7 @@
     <title>A-Frame AR 海底場景</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>    
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script>
       // 這裡保留你寫的 'underwater-shader' (略，保持不變)
       AFRAME.registerShader('underwater-shader', {
@@ -52,7 +52,8 @@
       </a-assets>
 
       <a-marker preset="hiro">
-
+      <a-entity light="type: ambient; color: #BBB; intensity: 1.5"></a-entity>
+        
         <a-plane id="sand-plane"
                  width="3" height="3"
                  position="0 0 0"
@@ -76,13 +77,15 @@
          <a-gltf-model src="#fishA-model1"
                       position="-0.6 0.4 0" 
                       scale="0.08 0.08 0.08"
-                      rotation="0 0 0">
+                      rotation="0 0 0"
+                      animation-mixer>
         </a-gltf-model>
 
         <a-gltf-model src="#fishA-model2"
                       position="0.6 0.4 0" 
                       scale="0.08 0.08 0.08"
-                      rotation="0 0 0">
+                      rotation="0 0 0"
+                      animation-mixer>
         </a-gltf-model>
         <script>
   // 2. 用 JS 監聽模型載入完成
