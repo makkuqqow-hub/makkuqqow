@@ -72,7 +72,7 @@
         </a-gltf-model>
         <script>
   // 2. 用 JS 監聽模型載入完成
-  document.querySelector('#my-reef').addEventListener('model-loaded', function (evt) {
+  document.querySelector('#reef-model').addEventListener('model-loaded', function (evt) {
     // 取得圖片紋理
     var texture = new THREE.TextureLoader().load('texture/rock.jpg'); // 這裡換成你想貼的圖片路徑
     
