@@ -150,7 +150,7 @@
       // 朝目標點移動
       let moveX = currentPos.x + (dx / distance) * speed;
       let moveZ = currentPos.z + (dz / distance) * speed;
-      fish.setAttribute('position', { x: moveX, y: currentPos.y, z: moveZ });
+      this.el.setAttribute('position', { x: moveX, y: currentPos.y, z: moveZ });
 
       // 這裡修正了魚頭的朝向
     let angle = Math.atan2(dx, dz);
