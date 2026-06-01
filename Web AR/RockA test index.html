@@ -70,6 +70,21 @@
                       scale="0.8 0.3 0"
                       rotation="0 0 0">
         </a-gltf-model>
+        <script>
+  // 2. 用 JS 監聽模型載入完成
+  document.querySelector('#my-reef').addEventListener('model-loaded', function (evt) {
+    // 取得圖片紋理
+    var texture = new THREE.TextureLoader().load('texture/rock.jpg'); // 這裡換成你想貼的圖片路徑
+    
+    // 遍歷模型的所有網格並換上新貼圖
+    evt.detail.model.traverse(function (node) {
+      if (node.isMesh) {
+        node.material.map = texture;
+        node.material.needsUpdate = true;
+      }
+    });
+  });
+</script>
 
         <a-entity id="placeholder-fish-school" position="-0.6 0.4 0">
           <a-entity geometry="primitive: sphere; radius: 0.05" material="color: #4169e1" position="0 0 0"></a-entity>
