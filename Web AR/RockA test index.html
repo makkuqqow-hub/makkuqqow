@@ -127,7 +127,7 @@
     ];
     
     let currentTargetIndex = 1; // 從第二個點開始游
-    const speed = 0.005; // 調整游動速度，數字越大游越快
+    const speed = 0.002; // 調整游動速度，數字越大游越快
 
     // 2. 每幀更新魚的位置與方向
     function tick() {
@@ -152,14 +152,14 @@
       let moveZ = currentPos.z + (dz / distance) * speed;
       fish.setAttribute('position', { x: moveX, y: currentPos.y, z: moveZ });
 
-      // 自動計算魚頭朝向（讓魚永遠面向前進的方向）
-      // THREE.MathUtils.radToDeg 可以把弧度轉角度
-      let angle = Math.atan2(dx, dz);
-      let angleDeg = THREE.MathUtils.radToDeg(angle);
-      
-      // 根據你的模型初始轉向，可能需要加減角度（預設面朝前就直接用 angleDeg）
-      // 如果魚游的時候是橫著游，可以在這裡調整，例如 `angleDeg + 90`
-      fish.setAttribute('rotation', { x: 0, y: angleDeg, z: 0 });
+      // 這裡修正了魚頭的朝向
+    let angle = Math.atan2(dx, dz);
+    let angleDeg = THREE.MathUtils.radToDeg(angle);
+    
+    // 加上 90 度修正模型的初始角度偏差
+    this.el.setAttribute('rotation', { x: 0, y: angleDeg + 90, z: 0 });
+  }
+});
 
       requestAnimationFrame(tick);
     }
