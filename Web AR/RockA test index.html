@@ -47,6 +47,7 @@
         <img id="sand-texture" src="texture/beachsand.jpg" crossorigin="anonymous">
         <img id="caustics-texture" src="texture/underwater ripples.jpg" crossorigin="anonymous">
         <a-asset-item id="reef-model" src="glb/rockA.glb"></a-asset-item>
+        <a-asset-item id="fishA-model1" src="glb/A鯖魚.glb"></a-asset-item>
       </a-assets>
 
       <a-marker preset="hiro">
@@ -66,6 +67,12 @@
         </a-plane>
         
         <a-gltf-model src="#reef-model"
+                      position="0.8 0 -0.8" 
+                      scale="0.8 0.3 0.8"
+                      rotation="0 0 0">
+        </a-gltf-model>
+
+         <a-gltf-model src="#fish-model"
                       position="0.8 0 -0.8" 
                       scale="0.8 0.3 0.8"
                       rotation="0 0 0">
