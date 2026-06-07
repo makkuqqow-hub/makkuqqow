@@ -29,32 +29,30 @@
                transparent="true">
       </a-image>
 
-     <a-entity position="-0.5 1.5 -3.5"
-                animation="property: position; to: 1.2 1.5 -3.5; dur: 8000; dir: alternate; loop: true; easing: easeInOutQuad">
+    <a-entity position="-0.5 1.4 -2.8"
+                animation="property: position; to: 0.8 1.4 -2.8; dur: 10000; dir: alternate; loop: true; easing: easeInOutQuad">
         
         <a-image src="#Fish1" 
-                 width="1.2" 
-                 height="1.8"
+                 width="1.0" 
+                 height="1.5"
                  transparent="true"
-                 look-at="[camera]"
-                 material="alphaTest: 0.5; depthWrite: false;"
-                 animation__float="property: position; to: 0 0.15 0; dur: 2000; dir: alternate; loop: true; easing: easeInOutSine"
-                 animation__rotate="property: rotation; to: 0 0 8; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
+                 look-at="[camera]" material="alphaTest: 0.5; depthWrite: false;"
+                 animation__float="property: position; to: 0 0.2 0; dur: 3000; dir: alternate; loop: true; easing: easeInOutSine"
+                 animation__rotate="property: rotation; to: 0 0 6; dur: 3500; dir: alternate; loop: true; easing: easeInOutSine">
         </a-image>
       </a-entity>
 
 
-      <a-entity position="-1.5 1.0 -3.8"
-                animation="property: position; to: 1.5 2.0 -3.8; dur: 5000; dir: alternate; loop: true; easing: easeInOutQuad">
+      <a-entity position="-2.5 2.5 -3.5"
+                rotation="0 0 -15" animation="property: position; to: -0.5 1.8 -3.5; dur: 4500; dir: alternate; loop: true; easing: easeInOutCubic">
         
         <a-image src="#Fish2" 
-                 width="1.2" 
-                 height="0.6"
+                 width="1.3" 
+                 height="0.65"
                  transparent="true"
-                 look-at="[camera]"
                  material="alphaTest: 0.5; depthWrite: false;"
-                 animation__float="property: position; to: 0 0.08 0; dur: 1200; dir: alternate; loop: true; easing: easeInOutSine"
-                 animation__wiggle="property: rotation; to: 0 15 0; dur: 800; dir: alternate; loop: true; easing: easeInOutSine">
+                 animation__tail="property: rotation; to: 0 0 10; dur: 300; dir: alternate; loop: true; easing: linear"
+                 animation__jerk="property: position; to: 0 0.05 0; dur: 400; dir: alternate; loop: true; easing: easeInQuint">
         </a-image>
       </a-entity>
 
