@@ -13,6 +13,7 @@
         <img id="backgroundC2" src="bg/C_land.png">
         <img id="coralpink" src="bg/C_coral.png">
         <img id="Fish1" src="fishpng/C_Hippocampus.png"> 
+        <img id="Fish2" src="fishpng/C_Chaetodon wiebeli.png"> 
       </a-assets>
 
       <a-image src="#backgroundC" 
@@ -23,8 +24,8 @@
 
       <a-image src="#backgroundC2" 
                position="0 1.5 -4.5" 
-               width="11.9" 
-               height="10.5"
+               width="8.5" 
+               height="7.5"
                transparent="true">
       </a-image>
 
@@ -38,6 +39,15 @@
                  look-at="[camera]"
                  animation__float="property: position; to: 0 0.15 0; dur: 2000; dir: alternate; loop: true; easing: easeInOutSine"
                  animation__rotate="property: rotation; to: 0 0 8; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
+        </a-image>
+
+        <a-image src="#Fish2" 
+                 width="1.2" 
+                 height="0.6"
+                 transparent="true"
+                 look-at="[camera]"
+                 animation__float="property: position; to: 0 0.5 0; dur: 2000; dir: alternate; loop: true; easing: easeInOutSine"
+                 animation__rotate="property: rotation; to: 0 0 6; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
         </a-image>
       </a-entity>
 
