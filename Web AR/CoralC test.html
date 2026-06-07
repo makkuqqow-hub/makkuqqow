@@ -10,7 +10,7 @@
     <a-scene>
       <a-assets>
         <img id="backgroundC" src="bg/coral C_bg.png">
-        <img id="backgroundC2" src="bg/C_land_coral C_seawead.png">
+        <img id="backgroundC2" src="bg/C_land.png">
         <img id="myFish" src="img/fish.png"> 
       </a-assets>
 
@@ -18,6 +18,13 @@
                position="0 1.5 -5" 
                width="8" 
                height="6">
+      </a-image>
+
+      <a-image src="#backgroundC2" 
+               position="0 1.5 -4.5" 
+               width="8" 
+               height="6"
+               transparent="true">
       </a-image>
 
       <a-entity position="0 1.5 -3"
@@ -34,7 +41,8 @@
         
       </a-entity>
 
-      <a-sky color="#6395b0"></a-sky> <a-light type="ambient" color="#fff"></a-light>
+      <a-sky color="#6395b0"></a-sky> 
+      <a-light type="ambient" color="#fff"></a-light>
     </a-scene>
   </body>
 </html>
