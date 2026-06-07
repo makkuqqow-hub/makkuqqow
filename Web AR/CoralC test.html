@@ -14,6 +14,7 @@
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" light="defaultLightsEnabled: false">
       
       <a-assets>
+        <img id="backgroundC1" src="bg/C_underwaterup.png">
         <img id="backgroundC2" src="bg/C_land.png">
         <img id="coralpink" src="bg/C_coral.png">
         <img id="seawead1" src="bg/C_seawead.png">
@@ -25,6 +26,13 @@
 
       <a-marker preset="hiro">
 
+        <a-image src="#backgroundC1" 
+                 position="0 1 -1.5" 
+                 width="4.2.5" 
+                 height="3.75"
+                 transparent="true">
+        </a-image>
+        
         <a-image src="#backgroundC2" 
                  position="0 0.5 -1.5" 
                  width="4.2.5" 
