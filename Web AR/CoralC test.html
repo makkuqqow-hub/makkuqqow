@@ -2,40 +2,44 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Coral C - AR Mode</title>
+    <title>Coral C - AR Stable</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-    <script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
+    
+    <script>
+      AFRAME.registerComponent('screen-billboard', {
+        tick: function () {
+          var cameraEl = this.el.sceneEl.camera;
+          if (!cameraEl) return;
+          // 讓物件面向相機，但強行把 X 軸與 Z 軸的旋轉鎖定在 0
+          this.el.object3D.lookAt(cameraEl.getWorldPosition(new THREE.Vector3()));
+          this.el.object3D.rotation.x = 0;
+          this.el.object3D.rotation.z = 0;
+        }
+      });
+    </script>
   </head>
   
   <body style="margin: 0px; overflow: hidden;">
-    
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" light="defaultLightsEnabled: false">
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" 
+             renderer="logarithmicDepthBuffer: true; precision: medium;"
+             light="defaultLightsEnabled: false">
       
       <a-assets>
-        <img id="backgroundC1" src="bg/C_underwaterup.png">
         <img id="backgroundC2" src="bg/C_land.png">
         <img id="coralpink" src="bg/C_coral.png">
         <img id="seawead1" src="bg/C_seawead.png">
         <img id="Fish1" src="fishpng/C_Hippocampus.png"> 
-
         <video id="Fish2Video" src="video/C_Chaetodon wiebeli.mp4" 
                autoplay="true" loop="true" muted="true" playsinline crossorigin="anonymous"></video>
       </a-assets>
 
       <a-marker preset="hiro">
-
-        <a-image src="#backgroundC1" 
-                 position="0 1 -1.5" 
-                 width="4.2.5" 
-                 height="3.75"
-                 transparent="true">
-        </a-image>
         
         <a-image src="#backgroundC2" 
-                 position="0 0.5 -1.5" 
-                 width="4.2.5" 
+                 position="0 0.2 -1.8" 
+                 width="4.25" 
                  height="3.75"
                  transparent="true">
         </a-image>
@@ -46,7 +50,7 @@
                    width="0.5" 
                    height="0.75"
                    transparent="true"
-                   look-at="[camera]" 
+                   screen-billboard
                    material="alphaTest: 0.5; depthWrite: false;"
                    animation__float="property: position; to: 0 0.1 0; dur: 3000; dir: alternate; loop: true; easing: easeInOutSine"
                    animation__rotate="property: rotation; to: 0 0 6; dur: 3500; dir: alternate; loop: true; easing: easeInOutSine">
@@ -58,6 +62,7 @@
           <a-video src="#Fish2Video" 
                    width="0.65" 
                    height="0.55"
+                   screen-billboard
                    material="shader: chromakey; color: 0.1 0.9 0.1; transparent: true; depthWrite: false;">
           </a-video>
         </a-entity>
@@ -70,15 +75,15 @@
         </a-image>
 
         <a-image src="#seawead1"
-                 position="-0.3 0.8 -0.6"
+                 position="-0.9 0.8 -0.6"
                  width="4"
                  height="3"
                  transparent="true">
         </a-image>
 
       </a-marker>
+
       <a-entity camera></a-entity>
-      
     </a-scene>
   </body>
 </html>
