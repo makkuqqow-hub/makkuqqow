@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Coral C</title>
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <img id="backgroundC" src="bg/coral C_bg.png">
+        <img id="myFish" src="img/fish.png"> 
+      </a-assets>
+
+      <a-image src="#backgroundC" 
+               position="0 1.5 -5" 
+               width="8" 
+               height="6">
+      </a-image>
+
+      <a-entity position="0 1.5 -3"
+                animation="property: position; to: 2 1.5 -3; dur: 8000; dir: alternate; loop: true; easing: easeInOutQuad">
+        
+        <a-image src="#myFish" 
+                 width="1.2" 
+                 height="1.2"
+                 transparent="true"
+                 look-at="[camera]"
+                 animation__float="property: position; to: 0 0.15 0; dur: 2000; dir: alternate; loop: true; easing: easeInOutSine"
+                 animation__rotate="property: rotation; to: 0 0 8; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
+        </a-image>
+        
+      </a-entity>
+
+      <a-sky color="#6395b0"></a-sky> <a-light type="ambient" color="#fff"></a-light>
+    </a-scene>
+  </body>
+</html>
