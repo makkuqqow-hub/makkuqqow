@@ -9,17 +9,17 @@
   <body>
     <a-scene>
       <a-assets>
-        <img id="backgroundD" src="video/D_bgvideo.mp4">
+        <video id="backgroundD" src="video/D_bgvideo.mp4" autoplay loop muted playsinline></video>
         <img id="myFish" src="img/fish.png"> 
       </a-assets>
 
       <a-entity position="-0.5 0.5 0.2"
-                  animation="property: position; to: 0.8 0.5 -0.2; dur: 7000; dir: alternate; loop: true; easing: easeInOutSine">
-          <a-video src="#Fish2Video" 
-                   width="1.2" 
-                   height="0.9">
-          </a-video>
-        </a-entity>
+                animation="property: position; to: 0.8 0.5 -0.2; dur: 7000; dir: alternate; loop: true; easing: easeInOutSine">
+        <a-video src="#backgroundD" 
+                 width="1.2" 
+                 height="0.9">
+        </a-video>
+      </a-entity>
 
       <a-entity position="0 1.5 -3"
                 animation="property: position; to: 2 1.5 -3; dur: 8000; dir: alternate; loop: true; easing: easeInOutQuad">
@@ -35,7 +35,9 @@
         
       </a-entity>
 
-      <a-sky color="#6395b0"></a-sky> <a-light type="ambient" color="#fff"></a-light>
+      <a-sky src="#backgroundD"></a-sky> 
+      
+      <a-light type="ambient" color="#fff"></a-light>
     </a-scene>
   </body>
 </html>
