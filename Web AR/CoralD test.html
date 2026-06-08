@@ -2,40 +2,47 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Coral D</title>
+    <title>Coral D - AR Mode</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
   </head>
-  <body>
-    <a-scene>
+  
+  <body style="margin: 0px; overflow: hidden;">
+    
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+      
       <a-assets>
         <video id="backgroundD" src="video/D_bgvideo.mp4" autoplay loop muted playsinline></video>
         <img id="myFish" src="img/fish.png"> 
       </a-assets>
 
-     
-       <a-video src="#backgroundD" 
-         width="16" 
-         height="9" 
-         position="0 4.5 -8">
-</a-video>
-
-
-      <a-entity position="0 1.5 -3"
-                animation="property: position; to: 2 1.5 -3; dur: 8000; dir: alternate; loop: true; easing: easeInOutQuad">
+      <a-marker preset="hiro">
         
-        <a-image src="#myFish" 
-                 width="1.2" 
-                 height="1.2"
-                 transparent="true"
-                 look-at="[camera]"
-                 animation__float="property: position; to: 0 0.15 0; dur: 2000; dir: alternate; loop: true; easing: easeInOutSine"
-                 animation__rotate="property: rotation; to: 0 0 8; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
-        </a-image>
-        
-      </a-entity>
+        <a-video src="#backgroundD" 
+                 width="4" 
+                 height="2.25" 
+                 position="0 1.5 -2"
+                 rotation="-30 0 0">
+        </a-video>
 
-      <a-sky color="#283754"></a-sky> 
+        <a-entity position="0 1 -1"
+                  animation="property: position; to: 1 1 -1; dur: 8000; dir: alternate; loop: true; easing: easeInOutQuad">
+          
+          <a-image src="#myFish" 
+                   width="0.6" 
+                   height="0.6"
+                   transparent="true"
+                   look-at="[camera]"
+                   animation__float="property: position; from: 0 0 0; to: 0 0.1 0; dur: 2000; dir: alternate; loop: true; easing: easeInOutSine"
+                   animation__rotate="property: rotation; to: 0 0 8; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
+          </a-image>
+          
+        </a-entity>
+
+      </a-marker>
+
+      <a-entity camera></a-entity>
       
       <a-light type="ambient" color="#fff"></a-light>
     </a-scene>
