@@ -8,25 +8,28 @@
     <script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
     
     <script>
-      // 1. 全域影片強制播放組件
+      // 1. 全域影片強制播放組件（已更新：同時支援魚影片與背景影片）
       AFRAME.registerComponent('ar-video-fix', {
         init: function () {
-          var video = document.querySelector('#Fish2Video');
+          var fishVideo = document.querySelector('#Fish2Video');
+          var bgVideo = document.querySelector('#BgVideo');
           
-          // 核心解法：只要使用者點擊手機螢幕任何地方，就強迫影片播放
-          window.addEventListener('click', function() {
-            if (video) {
-              video.muted = true; // 確保靜音
-              video.play();
+          var playVideos = function() {
+            // 處理綠幕魚影片
+            if (fishVideo) {
+              fishVideo.muted = true; 
+              fishVideo.play().catch(function(err) { console.log(err); });
             }
-          });
-          
-          window.addEventListener('touchstart', function() {
-            if (video) {
-              video.muted = true;
-              video.play();
+            // 處理背景影片
+            if (bgVideo) {
+              bgVideo.muted = true; // 行動裝置通常要求靜音才能自動/強制播放
+              bgVideo.play().catch(function(err) { console.log(err); });
             }
-          });
+          };
+
+          // 只要使用者點擊或觸控手機螢幕任何地方，就強迫所有影片播放
+          window.addEventListener('click', playVideos);
+          window.addEventListener('touchstart', playVideos);
         }
       });
     </script>
@@ -45,40 +48,40 @@
         <img id="seawead1" src="bg/C_seawead.png">
         <img id="Fish1" src="fishpng/C_Hippocampus.png"> 
         
-        <a-video
-    src="#Fish2Video"
-    width="0.8"
-    height="1.2"
-    rotation="-90 0 0"
-    material="
-        shader: chromakey;
-        transparent: true;
-        side: double;">
-</a-video>
+        <video id="Fish2Video" src="video/fish2.mp4" autoplay loop muted playsinline crossorigin="anonymous"></video>
+        <video id="BgVideo" src="video/C_bgvideo.mp4" autoplay loop muted playsinline crossorigin="anonymous"></video>
       </a-assets>
+
+      <a-videosphere src="#BgVideo" rotation="0 -90 0" radius="100" material="transparent: true; opacity: 0.7;"></a-videosphere>
 
       <a-marker preset="hiro" scale="0.5 0.5 0.5">
         
-        <a-image src="#backgroundC1" position="0 0 0" width="3.6" height="2.8" rotation="-90 0 0"></a-image>
-        <a-image src="#backgroundC2" position="0 0.05 0" width="3.0" height="1.0" rotation="-90 0 0" transparent="true"></a-image>
+        <a-video
+          src="#BgVideo"
+          width="0.8"
+          height="1.4"
+          rotation="-90 0 0"
+          material="
+            transparent: true;
+            side: double;">
+        </a-video>
+
         <a-image src="#seawead1" position="-0.2 0.1 0" width="3.5" height="2.5" rotation="-90 0 0" transparent="true" material="alphaTest: 0.5; depthWrite: false;"></a-image>
         <a-image src="#coralpink" position="0.6 0.15 0" width="3.5" height="2.5" rotation="-90 0 0" transparent="true" material="alphaTest: 0.5; depthWrite: false;"></a-image>
 
-       <a-entity position="-0.5 0.25 0"
-          animation="property: position; to: 0.8 0.25 -0.2; dur: 7000; dir: alternate; loop: true; easing: easeInOutSine">
-
-    <a-video
-        src="#Fish2Video"
-        width="0.8"
-        height="1.4"
-        rotation="-90 0 0"
-        material="
-            shader: chromakey;
-            transparent: true;
-            side: double;">
-    </a-video>
-
-</a-entity>
+        <a-entity position="-0.5 0.25 0"
+                  animation="property: position; to: 0.8 0.25 -0.2; dur: 7000; dir: alternate; loop: true; easing: easeInOutSine">
+          <a-video
+              src="#Fish2Video"
+              width="0.8"
+              height="1.4"
+              rotation="-90 0 0"
+              material="
+                  shader: chromakey;
+                  transparent: true;
+                  side: double;">
+          </a-video>
+        </a-entity>
 
         <a-entity position="-0.2 0.3 0"
                   animation="property: position; to: 0.5 0.3 0.4; dur: 10000; dir: alternate; loop: true; easing: easeInOutQuad">
