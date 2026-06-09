@@ -2,36 +2,33 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Coral D - AR Mode</title>
+    <title>Coral D - AR Fixed</title>
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
-    
     <script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
   </head>
   
-  <body style="margin: 0px; overflow: hidden;">
+  <body style="margin: 0px; overflow: hidden;" onclick="document.querySelector('#backgroundD').play(); document.querySelector('#FishD1').play();">
     
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
       
       <a-assets>
         <video id="backgroundD" src="video/D_bgvideo.mp4" autoplay loop muted playsinline></video>
-        <video id="FishD1" src="video/D_Heniochus_acuminatus.mp4" autoplay loop muted playsinline crossorigin="anonymous"></video>
+        <video id="FishD1" src="video/D_Heniochus acuminatus.mp4" autoplay loop muted playsinline></video>
         <img id="myFish" src="img/fish.png"> 
       </a-assets>
 
       <a-marker preset="hiro">
         
-        <a-video src="#backgroundD" 
-                 width="4" 
-                 height="2.25" 
-                 position="0 0.1 0"
-                 rotation="90 0 0">
-        </a-video>
+        <a-entity geometry="primitive: plane; width: 4; height: 2.25"
+                  material="src: #backgroundD; side: double;"
+                  position="0 0.05 0"
+                  rotation="90 0 0">
+        </a-entity>
 
         <a-entity position="0 1 -1"
                   animation="property: position; to: 1 1 -1; dur: 8000; dir: alternate; loop: true; easing: easeInOutQuad">
-          
           <a-image src="#myFish" 
                    width="0.6" 
                    height="0.6"
@@ -40,11 +37,10 @@
                    animation__float="property: position; from: 0 0 0; to: 0 0.1 0; dur: 2000; dir: alternate; loop: true; easing: easeInOutSine"
                    animation__rotate="property: rotation; to: 0 0 8; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
           </a-image>
-          
         </a-entity>
 
         <a-entity geometry="primitive: plane; width: 1.2; height: 0.9"
-                  material="shader: chromakey; src: #FishD1; color: 0.1 0.9 0.1; transparent: true; depthWrite: false"
+                  material="shader: chromakey; src: #FishD1; color: 0.1 0.9 0.1; transparent: true; depthWrite: false; side: double"
                   position="-0.5 0.5 -1.5" 
                   rotation="0 0 0"
                   animation="property: position; to: 0.8 0.5 -1.9; dur: 7000; dir: alternate; loop: true; easing: easeInOutSine">
@@ -53,7 +49,6 @@
       </a-marker>
 
       <a-entity camera></a-entity>
-
       <a-light type="ambient" color="#fff"></a-light>
     </a-scene>
   </body>
