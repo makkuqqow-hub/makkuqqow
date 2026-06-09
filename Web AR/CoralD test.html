@@ -14,6 +14,7 @@
       
       <a-assets>
         <video id="backgroundD" src="video/D_bgvideo.mp4" autoplay loop muted playsinline></video>
+        <video id="FishD1" src="video/D_Heniochus acuminatus.mp4" autoplay loop muted playsinline crossorigin="anonymous"></video>
         <img id="myFish" src="img/fish.png"> 
       </a-assets>
 
@@ -38,6 +39,13 @@
                    animation__rotate="property: rotation; to: 0 0 8; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
           </a-image>
           
+        </a-entity>
+
+        <a-entity geometry="primitive: plane; width: 1.2; height: 0.9"
+                  material="shader: chromakey; src: #Fish2Video; color: 0 1 0; transparent: true; depthWrite: false"
+                  position="-0.5 0.5 -1.5" 
+                  rotation="0 0 0"
+                  animation="property: position; to: 0.8 0.5 -1.9; dur: 7000; dir: alternate; loop: true; easing: easeInOutSine">
         </a-entity>
 
       </a-marker>
