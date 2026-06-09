@@ -1,100 +1,43 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Coral C - AR Stable</title>
-    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <script src="https://unpkg.com/aframe-chromakey-material/dist/aframe-chromakey-material.min.js"></script>
-    
-    <script>
-      AFRAME.registerComponent('screen-billboard', {
-        tick: function () {
-          var cameraEl = this.el.sceneEl.camera;
-          if (!cameraEl) return;
-          this.el.object3D.lookAt(cameraEl.getWorldPosition(new THREE.Vector3()));
-          this.el.object3D.rotation.x = 0;
-          this.el.object3D.rotation.z = 0;
-        }
-      });
-    </script>
-  </head>
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" 
+         renderer="logarithmicDepthBuffer: true; precision: medium;"
+         light="defaultLightsEnabled: false">
   
-  <body style="margin: 0px; overflow: hidden;">
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" 
-             renderer="logarithmicDepthBuffer: true; precision: medium;"
-             light="defaultLightsEnabled: false">
-      
-      <a-assets>
-        <img id="backgroundC1" src="bg/C_underwaterup.png">
-        <img id="backgroundC2" src="bg/C_land.png">
-        <img id="coralpink" src="bg/C_coral.png">
-        <img id="seawead1" src="bg/C_seawead.png">
-        <img id="Fish1" src="fishpng/C_Hippocampus.png"> 
-        <video id="Fish2Video" src="video/C_Chaetodon wiebeli.mp4" 
-               autoplay="true" loop="true" muted="true" playsinline crossorigin="anonymous"></video>
-      </a-assets>
+  <a-assets>
+    <img id="backgroundC1" src="bg/C_underwaterup.png">
+    <img id="backgroundC2" src="bg/C_land.png">
+    <img id="coralpink" src="bg/C_coral.png">
+    <img id="seawead1" src="bg/C_seawead.png">
+    <img id="Fish1" src="fishpng/C_Hippocampus.png"> 
+    <video id="Fish2Video" src="video/C_Chaetodon wiebeli.mp4" 
+           autoplay="true" loop="true" muted="true" playsinline crossorigin="anonymous"></video>
+  </a-assets>
 
-      <a-marker preset="hiro">
-        <a-image src="#backgroundC1" 
-                 position="0 0 0" 
-                 width="3.6" 
-                 height="2.8"
-                 rotation="-90 0 0">
-        </a-image>
+  <a-marker preset="hiro" marker-video-auto>
+    
+    <a-image src="#backgroundC1" position="0 0 0" width="3.6" height="2.8" rotation="-90 0 0"></a-image>
+    <a-image src="#backgroundC2" position="0 0.1 0" width="3.0" height="1.0" rotation="-90 0 0" transparent="true"></a-image>
+    <a-image src="#seawead1" position="-0.2 0.3 0" width="3.5" height="2.5" rotation="-90 0 0" transparent="true" material="alphaTest: 0.5; depthWrite: false;"></a-image>
+    <a-image src="#coralpink" position="0.6 0.35 0" width="3.5" height="2.5" rotation="-90 0 0" transparent="true" material="alphaTest: 0.5; depthWrite: false;"></a-image>
 
-        <a-image src="#backgroundC2" 
-                 position="0 0.1 0" 
-                 width="3.0" 
-                 height="1.0"
-                 rotation="-90 0 0"
-                 transparent="true">
-        </a-image>
+    <a-entity position="-0.5 0.5 0"
+              animation="property: position; to: 0.8 0.5 -0.2; dur: 7000; dir: alternate; loop: true; easing: easeInOutSine">
+      <a-video src="#Fish2Video" 
+               width="1.2" 
+               height="0.9"
+               rotation="-90 0 0"
+               material="shader: chromakey; color: #00FF00; colorTolerance: 0.2; transparent: true; depthWrite: false;">
+      </a-video>
+    </a-entity>
 
-        <a-image src="#seawead1"
-                 position="-0.2 0.3 0"
-                 width="3.5"
-                 height="2.5"
-                 rotation="-90 0 0"
-                 transparent="true"
-                 material="alphaTest: 0.5; depthWrite: false;">
-        </a-image>
+    <a-entity position="-0.2 0.6 0"
+              animation="property: position; to: 0.5 0.6 0.4; dur: 10000; dir: alternate; loop: true; easing: easeInOutQuad">
+      <a-image src="#Fish1" width="0.5" height="0.75" rotation="-90 0 0" transparent="true" material="alphaTest: 0.5; depthWrite: false;"
+               animation__float="property: position; to: 0 0.1 0; dur: 3000; dir: alternate; loop: true; easing: easeInOutSine"
+               animation__rotate="property: rotation; to: -90 0 6; dur: 3500; dir: alternate; loop: true; easing: easeInOutSine">
+      </a-image>
+    </a-entity>
 
-        <a-image src="#coralpink"
-                 position="0.6 0.35 0"
-                 width="3.5"
-                 height="2.5"
-                 rotation="-90 0 0"
-                 transparent="true"
-                 material="alphaTest: 0.5; depthWrite: false;">
-        </a-image>
+  </a-marker>
 
-        <a-entity position="-0.5 0.5 0"
-                  animation="property: position; to: 0.8 0.5 -0.2; dur: 7000; dir: alternate; loop: true; easing: easeInOutSine">
-          <a-video src="#Fish2Video" 
-                   width="1.2" 
-                   height="0.9"
-                   rotation="-90 0 0"
-                   material="shader: chromakey; color: 0.1 0.9 0.1; transparent: true; depthWrite: false;">
-          </a-video>
-        </a-entity>
-
-        <a-entity position="-0.2 0.6 0"
-                  animation="property: position; to: 0.5 0.6 0.4; dur: 10000; dir: alternate; loop: true; easing: easeInOutQuad">
-          <a-image src="#Fish1" 
-                   width="0.5" 
-                   height="0.75"
-                   rotation="-90 0 0"
-                   transparent="true"
-                   material="alphaTest: 0.5; depthWrite: false;"
-                   animation__float="property: position; to: 0 0.1 0; dur: 3000; dir: alternate; loop: true; easing: easeInOutSine"
-                   animation__rotate="property: rotation; to: -90 0 6; dur: 3500; dir: alternate; loop: true; easing: easeInOutSine">
-          </a-image>
-        </a-entity>
-
-      </a-marker>
-
-      <a-entity camera></a-entity>
-    </a-scene>
-  </body>
-</html>
+  <a-entity camera></a-entity>
+</a-scene>
