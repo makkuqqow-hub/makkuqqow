@@ -12,7 +12,6 @@
         tick: function () {
           var cameraEl = this.el.sceneEl.camera;
           if (!cameraEl) return;
-          // 讓物件面向相機，但強行把 X 軸與 Z 軸的旋轉鎖定在 0
           this.el.object3D.lookAt(cameraEl.getWorldPosition(new THREE.Vector3()));
           this.el.object3D.rotation.x = 0;
           this.el.object3D.rotation.z = 0;
@@ -27,7 +26,7 @@
              light="defaultLightsEnabled: false">
       
       <a-assets>
-        <ing id="backgroundC1" src="bg/C_underwaterup.png">
+        <img id="backgroundC1" src="bg/C_underwaterup.png">
         <img id="backgroundC2" src="bg/C_land.png">
         <img id="coralpink" src="bg/C_coral.png">
         <img id="seawead1" src="bg/C_seawead.png">
@@ -41,7 +40,7 @@
                  position="0 0 0" 
                  width="3.6" 
                  height="2.8"
-                 rotation="-90 0 0">>
+                 rotation="-90 0 0">
         </a-image>
 
         <a-image src="#backgroundC2" 
@@ -89,7 +88,7 @@
                    transparent="true"
                    material="alphaTest: 0.5; depthWrite: false;"
                    animation__float="property: position; to: 0 0.1 0; dur: 3000; dir: alternate; loop: true; easing: easeInOutSine"
-                   animation__rotate="property: rotation; to: 0 0 6; dur: 3500; dir: alternate; loop: true; easing: easeInOutSine">
+                   animation__rotate="property: rotation; to: -90 0 6; dur: 3500; dir: alternate; loop: true; easing: easeInOutSine">
           </a-image>
         </a-entity>
 
