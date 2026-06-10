@@ -52,7 +52,7 @@
         <video id="BgVideo" src="video/C_bgvideo.mp4" autoplay loop muted playsinline crossorigin="anonymous"></video>
       </a-assets>
 
-      <a-videosphere src="#BgVideo" position="0 -15 0" rotation="0 -90 0" radius="100" material="transparent: true; opacity: 0.7;"></a-videosphere>
+     <a-videosphere src="#BgVideo" rotation="0 -90 0" radius="100" material="transparent: true; opacity: 0.7;"></a-videosphere>
       <a-marker preset="hiro" scale="0.5 0.5 0.5">
         
         <a-video
@@ -96,7 +96,7 @@
 
       </a-marker>
 
-      <a-entity camera></a-entity>
+      <a-camera look-controls="pointerLockEnabled: false;"></a-camera>
     </a-scene>
   </body>
 </html>
